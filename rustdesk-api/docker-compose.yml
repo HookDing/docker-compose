@@ -1,0 +1,22 @@
+version: '2.1'
+services:
+   rustdesk-api:
+    container_name: rustdesk-api
+    environment:
+      - TZ=Asia/Shanghai
+      - RUSTDESK_API_RUSTDESK_ID_SERVER=<Host>:21116
+      - RUSTDESK_API_RUSTDESK_RELAY_SERVER=<Host>:21117
+      - RUSTDESK_API_RUSTDESK_API_SERVER=http://<Host>:21114 
+      - RUSTDESK_API_RUSTDESK_KEY=<RUSTDESK_KEY> # In the log that after rustdesk-server first start
+      - TOKEN_EXPIRE=2592000
+    ports:
+      - 21114:21114
+    image: lejianwen/rustdesk-api
+    volumes:
+      - ./data/rustdesk/api:/app/data
+    networks:
+      - rustdesk-net
+    restart: unless-stopped
+networks:
+  rustdesk-net:
+    external: false
