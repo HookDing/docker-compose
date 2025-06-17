@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  code-server:
+    image: linuxserver/code-server:latest
+    container_name: code-server
+    environment:
+      - PUID=1000 # 用户ID
+      - PGID=1000 # 组ID
+      - TZ=Asia/Shanghai # 时区
+      - PASSWORD=password # 设置登录密码
+      - SUDO_PASSWORD=password #可选，如果用这里的密码会以 sudo 的方式登陆
+#      - DEFAULT_WORKSPACE=./coder/project #可选，默认工作区
+    volumes:
+      - ./data:/config # 持久化配置数据，确保不丢失工作空间
+      - ./code-server:/home/coder/code-server
+    ports:
+      - 8111:8443 # 映射端口
+    restart: unless-stopped # 容器停止后自动重启
+    networks:
+      - code-server-net
+
+networks:
+  code-server-net:
+    driver: bridge
+
