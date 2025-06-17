@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  jellyfin:
+    image: nyanmisaka/jellyfin
+    container_name: jellyfin
+    restart: unless-stopped
+    privileged: true
+    ports:
+      - "8096:8096"
+    devices:
+      - /dev/dri:/dev/dri
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - ./Configs:/config
+      - ./Caches:/config/transcodes
+      - /d:/mnt/d
+    dns:
+      - 172.17.0.1
