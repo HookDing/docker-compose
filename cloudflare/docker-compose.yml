@@ -1,0 +1,6 @@
+version: '3'
+services:
+  cloudflared_tunnel_name1:
+    image: cloudflare/cloudflared:latest
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run --token <token> --protocol http2
